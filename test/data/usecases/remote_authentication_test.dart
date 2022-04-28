@@ -1,6 +1,6 @@
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http_client.dart';
 import 'package:tdd_clean_patterns_solid/data/usecases/remote_authentication.dart';
@@ -16,13 +16,11 @@ void main() {
   late AuthenticationParams params;
   Map mockValidData() =>
       {"accessToken": faker.guid.guid(), "name": faker.person.name()};
-  PostExpectation _mockRequest() => when(
-        httpClient.request(
-          url: anyNamed("url"),
-          method: anyNamed("method"),
-          body: anyNamed("body"),
-        ),
-      );
+  When _mockRequest() => when(() => httpClient.request(
+        url: any(named: "url"),
+        method: any(named: "method"),
+        body: any(named: "body"),
+      ));
   void mockHttpData(Map data) {
     _mockRequest().thenAnswer((_) async => data);
   }
@@ -42,7 +40,7 @@ void main() {
 
   test("should call httpClient with correct params", () async {
     await sut.auth(params);
-    verify(httpClient.request(
+    verify(() => httpClient.request(
         url: url,
         method: "post",
         body: {"email": params.email, "password": params.secret}));
