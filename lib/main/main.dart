@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../ui/components/app.dart';
+import '../ui/pages/login/login_presenter.dart';
+
+class LoginPresenterSpy extends Mock implements LoginPresenter {}
 
 void main() {
   final primaryColor = Color.fromRGBO(136, 14, 79, 1);
@@ -8,7 +12,9 @@ void main() {
   final primaryColorLight = Color.fromRGBO(188, 71, 123, 1);
   runApp(
     MaterialApp(
-      home: App(),
+      home: App(
+        presenter: LoginPresenterSpy(),
+      ),
       title: "4Dev",
       theme: ThemeData(
         primaryColor: primaryColor,

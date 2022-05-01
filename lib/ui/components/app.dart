@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:tdd_clean_patterns_solid/ui/pages/login_page.dart';
+import 'package:tdd_clean_patterns_solid/ui/pages/login/login_page.dart';
+import 'package:tdd_clean_patterns_solid/ui/pages/login/login_presenter.dart';
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  final LoginPresenter presenter;
+  const App({Key? key, required this.presenter}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LoginPage(),
+      body: LoginPage(
+        presenter: this.presenter,
+      ),
     );
   }
 }
