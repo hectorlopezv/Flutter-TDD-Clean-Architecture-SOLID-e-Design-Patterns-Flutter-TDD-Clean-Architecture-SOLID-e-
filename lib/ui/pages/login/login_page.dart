@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/login_presenter.dart';
 
 import '../../components/login_header.dart';
+import '../../components/spinner_dialog.dart';
+import 'components/email_input.dart';
+import 'components/login_button.dart';
+import 'components/password_input.dart';
 
 class LoginPage extends StatefulWidget {
   final LoginPresenter presenter;
@@ -42,18 +47,7 @@ class _LoginPageState extends State<LoginPage> {
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
-              return SimpleDialog(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(),
-                      SizedBox(),
-                      Text("Aguarde...", textAlign: TextAlign.center)
-                    ],
-                  )
-                ],
-              );
+              return SpinnerDialog();
             },
           );
         } else {
@@ -75,65 +69,27 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(32),
-                child: Form(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: StreamBuilder<String>(
-                            stream: widget.presenter.emailErrorStream,
-                            builder: (context, snapshot) {
-                              return TextFormField(
-                                onChanged: widget.presenter.validateEmail,
-                                decoration: InputDecoration(
-                                  errorText: snapshot.data,
-                                  labelText: "Email",
-                                  icon: Icon(
-                                    Icons.email,
-                                    color: Theme.of(context).primaryColorLight,
-                                  ),
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                              );
-                            }),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 32),
-                        child: StreamBuilder<String>(
-                            stream: widget.presenter.passwordErrorStream,
-                            builder: (context, snapshot) {
-                              return TextFormField(
-                                onChanged: widget.presenter.validatePassword,
-                                decoration: InputDecoration(
-                                  labelText: "passWord",
-                                  errorText: snapshot.data,
-                                  icon: Icon(
-                                    Icons.lock,
-                                    color: Theme.of(context).primaryColorLight,
-                                  ),
-                                ),
-                                obscureText: true,
-                              );
-                            }),
-                      ),
-                      StreamBuilder<bool>(
-                          stream: widget.presenter.isFormValidErrorStream,
-                          builder: (context, snapshot) {
-                            return RaisedButton(
-                              onPressed: snapshot.data != null
-                                  ? widget.presenter.auth
-                                  : null,
-                              child: Text(
-                                "Entrar".toUpperCase(),
-                              ),
-                            );
-                          }),
-                      FlatButton.icon(
-                        icon: Icon(Icons.person),
-                        onPressed: null,
-                        label: Text("Crian Conta"),
-                      )
-                    ],
+                child: Provider(
+                  create: (_) => widget.presenter,
+                  child: Form(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: EmailInput(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8, bottom: 32),
+                          child: PassWordInput(),
+                        ),
+                        LoginButton(),
+                        FlatButton.icon(
+                          icon: Icon(Icons.person),
+                          onPressed: null,
+                          label: Text("Crian Conta"),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               )
