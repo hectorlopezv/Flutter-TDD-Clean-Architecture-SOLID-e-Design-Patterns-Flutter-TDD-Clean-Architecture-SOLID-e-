@@ -31,10 +31,10 @@ void main() {
         .thenAnswer((_) => emailErrorController.stream);
     when(() => presenter.passwordErrorStream)
         .thenAnswer((_) => passwordErrorController.stream);
-    when(() => presenter.isFormValidErrorStream)
+    when(() => presenter.isFormValidStream)
         .thenAnswer((_) => isFormValidController.stream);
 
-    when(() => presenter.isLoadingErrorStream)
+    when(() => presenter.isLoadingStream)
         .thenAnswer((_) => isLoadingErrorController.stream);
 
     when(() => presenter.mainErrorStream)

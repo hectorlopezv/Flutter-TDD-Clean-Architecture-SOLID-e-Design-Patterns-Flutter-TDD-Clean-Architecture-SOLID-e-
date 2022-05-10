@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:tdd_clean_patterns_solid/main/factories/pages/login/login_presenter_factory.dart';
 
-import '../login_presenter.dart';
+import '../../../../presentation/presenters/getx_login_presenter.dart';
 
 class EmailInput extends StatelessWidget {
   const EmailInput({
@@ -10,22 +11,20 @@ class EmailInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<LoginPresenter>(context);
-    return StreamBuilder<String>(
-        stream: presenter.emailErrorStream,
-        builder: (context, snapshot) {
-          return TextFormField(
-            onChanged: presenter.validateEmail,
-            decoration: InputDecoration(
-              errorText: snapshot.data,
-              labelText: "Email",
-              icon: Icon(
-                Icons.email,
-                color: Theme.of(context).primaryColorLight,
-              ),
-            ),
-            keyboardType: TextInputType.emailAddress,
-          );
-        });
+    return GetX<GetxLoginPresenter>(
+      init: Get.put(makeGetxLoginPresenter()),
+      builder: (controller) => TextFormField(
+        onChanged: controller.validateEmail,
+        decoration: InputDecoration(
+          errorText: controller.emailError.value,
+          labelText: "Email",
+          icon: Icon(
+            Icons.email,
+            color: Theme.of(context).primaryColorLight,
+          ),
+        ),
+        keyboardType: TextInputType.emailAddress,
+      ),
+    );
   }
 }

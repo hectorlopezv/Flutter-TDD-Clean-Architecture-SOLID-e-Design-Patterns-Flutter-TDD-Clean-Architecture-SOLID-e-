@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
-import '../login_presenter.dart';
+import '../../../../presentation/presenters/getx_login_presenter.dart';
 
 class PassWordInput extends StatelessWidget {
   const PassWordInput({
@@ -10,22 +10,19 @@ class PassWordInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<LoginPresenter>(context);
-    return StreamBuilder<String>(
-        stream: presenter.passwordErrorStream,
-        builder: (context, snapshot) {
-          return TextFormField(
-            onChanged: presenter.validatePassword,
-            decoration: InputDecoration(
-              labelText: "passWord",
-              errorText: snapshot.data,
-              icon: Icon(
-                Icons.lock,
-                color: Theme.of(context).primaryColorLight,
-              ),
-            ),
-            obscureText: true,
-          );
-        });
+    return GetX<GetxLoginPresenter>(
+      builder: (controller) => TextFormField(
+        onChanged: controller.validatePassword,
+        decoration: InputDecoration(
+          labelText: "passWord",
+          errorText: controller.passwordError.value,
+          icon: Icon(
+            Icons.lock,
+            color: Theme.of(context).primaryColorLight,
+          ),
+        ),
+        obscureText: true,
+      ),
+    );
   }
 }

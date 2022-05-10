@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 
-import '../login_presenter.dart';
+import '../../../../presentation/presenters/getx_login_presenter.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({
@@ -10,16 +10,14 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<LoginPresenter>(context);
-    return StreamBuilder<bool>(
-        stream: presenter.isFormValidErrorStream,
-        builder: (context, snapshot) {
-          return RaisedButton(
-            onPressed: snapshot.data != null ? presenter.auth : null,
-            child: Text(
-              "Entrar".toUpperCase(),
-            ),
-          );
-        });
+    return GetX<GetxLoginPresenter>(
+      init: Get.find<GetxLoginPresenter>(),
+      builder: (controller) => RaisedButton(
+        onPressed: controller.isFormValid.value ? controller.auth : null,
+        child: Text(
+          "Entrar".toUpperCase(),
+        ),
+      ),
+    );
   }
 }

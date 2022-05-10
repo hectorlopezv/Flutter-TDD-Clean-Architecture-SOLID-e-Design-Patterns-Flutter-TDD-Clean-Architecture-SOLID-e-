@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:mocktail/mocktail.dart';
+import 'package:get/get.dart';
 
-import '../ui/components/app.dart';
-import '../ui/pages/login/login_presenter.dart';
-
-class LoginPresenterSpy extends Mock implements LoginPresenter {}
+import 'factories/pages/login/login_page_factory.dart';
 
 void main() {
+  runApp(App());
+}
+
+class App extends StatelessWidget {
   final primaryColor = Color.fromRGBO(136, 14, 79, 1);
   final primaryColorDark = Color.fromRGBO(96, 0, 39, 1);
   final primaryColorLight = Color.fromRGBO(188, 71, 123, 1);
-  runApp(
-    MaterialApp(
-      home: App(
-        presenter: LoginPresenterSpy(),
-      ),
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
       title: "4Dev",
       theme: ThemeData(
         primaryColor: primaryColor,
@@ -48,6 +48,8 @@ void main() {
           ),
         ),
       ),
-    ),
-  );
+      initialRoute: "/login",
+      getPages: [GetPage(name: "/login", page: makeLoginPage)],
+    );
+  }
 }
