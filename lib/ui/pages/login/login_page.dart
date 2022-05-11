@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/components/login_button.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/components/password_input.dart';
 
-import '../../../presentation/presenters/getx_login_presenter.dart';
 import '../../components/login_header.dart';
+import '../../components/spinner_dialog.dart';
 import 'components/email_input.dart';
+import 'login_presenter.dart';
 
 class LoginPage extends StatefulWidget {
-  final GetxLoginPresenter presenter;
+  final LoginPresenter presenter;
 
   const LoginPage({Key? key, required this.presenter}) : super(key: key);
 
@@ -18,9 +19,34 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    //TODO: show modal with error
-    // TODO: show spinner while loading
-    // TODO: hide spinner
+    widget.presenter.mainError.listen((error) {
+      if (error != "") {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red.shade900,
+            content: Text(
+              error,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+    });
+    widget.presenter.isLoading.listen((isLoading) {
+      if (isLoading) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return SpinnerDialog();
+          },
+        );
+      } else {
+        if (Navigator.canPop(context)) {
+          Navigator.of(context).pop();
+        }
+      }
+    });
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(

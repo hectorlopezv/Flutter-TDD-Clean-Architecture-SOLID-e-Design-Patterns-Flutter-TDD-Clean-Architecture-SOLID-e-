@@ -48,14 +48,6 @@ void main() {
     mockValidation2("");
     mockValidation3(null);
     final error = sut.validate(field: "any_field", value: "any_field");
-    expect(error, null);
-  });
-
-  test("should return the first error found", () {
-    mockValidation1("error_1");
-    mockValidation2("error_2");
-    mockValidation3("error_3");
-    final error = sut.validate(field: "any_field", value: "any_field");
-    expect(error, "error_1");
+    expect(error, "");
   });
 }

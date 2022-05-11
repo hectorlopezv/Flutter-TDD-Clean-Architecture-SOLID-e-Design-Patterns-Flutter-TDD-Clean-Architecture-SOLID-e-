@@ -12,10 +12,15 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
   String _email = "";
   String _password = "";
 
+  @override
   var emailError = "".obs;
+  @override
   var passwordError = "".obs;
+  @override
   var mainError = "".obs;
+  @override
   var isFormValid = false.obs;
+  @override
   var isLoading = false.obs;
 
   GetxLoginPresenter({required this.validation, required this.authentication});

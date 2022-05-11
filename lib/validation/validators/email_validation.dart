@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../protocols/field_validation.dart';
 
 class EmailValidation extends Equatable implements FieldValidation {
+  @override
   List get props => [field];
 
   @override

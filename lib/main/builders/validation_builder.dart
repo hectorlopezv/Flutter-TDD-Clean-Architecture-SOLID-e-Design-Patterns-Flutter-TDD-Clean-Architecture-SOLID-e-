@@ -1,3 +1,5 @@
+import 'package:tdd_clean_patterns_solid/validation/validators/password_validation.dart';
+
 import '../../validation/protocols/field_validation.dart';
 import '../../validation/validators/email_validation.dart';
 import '../../validation/validators/required_field_validation.dart';
@@ -19,6 +21,11 @@ class ValidationBuilder {
 
   ValidationBuilder email() {
     validations.add(EmailValidation(fieldName));
+    return this;
+  }
+
+  ValidationBuilder password() {
+    validations.add(PasswordValidation(fieldName));
     return this;
   }
 
