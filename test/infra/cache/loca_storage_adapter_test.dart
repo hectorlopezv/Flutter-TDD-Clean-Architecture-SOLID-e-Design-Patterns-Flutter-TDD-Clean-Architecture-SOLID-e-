@@ -18,24 +18,52 @@ void main() {
     value = faker.guid.guid();
   });
 
-  test("should call save secure(flutter cache storage) with correct values",
-      () async {
-    await sut.saveSecure(key: key, value: value);
-    verify(
-      () => secureStorage.write(key: key, value: value),
-    );
+  group("Save Secure", () {
+    test("should call save secure(flutter cache storage) with correct values",
+        () async {
+      await sut.saveSecure(key: key, value: value);
+      verify(
+        () => secureStorage.write(key: key, value: value),
+      );
+    });
+
+    test(
+        "should throw error when execption occurs save secure(flutter cache storage)",
+        () async {
+      when(
+        () => secureStorage.write(
+          key: any(named: "key"),
+          value: any(named: "value"),
+        ),
+      ).thenThrow(Exception());
+      final future = await sut.saveSecure(key: key, value: value);
+      expect(future, throwsA(TypeMatcher<Exception>()));
+    });
   });
 
-  test(
-      "should throw error when execption occurs save secure(flutter cache storage)",
-      () async {
-    when(
-      () => secureStorage.write(
-        key: any(named: "key"),
-        value: any(named: "value"),
-      ),
-    ).thenThrow(Exception());
-    final future = await sut.saveSecure(key: key, value: value);
-    expect(future, throwsA(TypeMatcher<Exception>()));
+  group("Fetch Secure", () {
+    void mockFetchSecure() {
+      when(
+        () => secureStorage.read(
+          key: any(named: "key"),
+        ),
+      ).thenAnswer((_) async => value);
+    }
+
+    setUp(() {
+      mockFetchSecure();
+    });
+
+    test("should call Fetch Secure  with correct values", () async {
+      await sut.fetchSecure(key: key);
+      verify(
+        () => secureStorage.read(key: key),
+      );
+    });
+  });
+
+  test("should return correct value on success", () async {
+    final fetchedValue = await sut.fetchSecure(key: key);
+    expect(fetchedValue, value);
   });
 }

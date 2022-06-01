@@ -9,7 +9,13 @@ class LocalStorageAdapter implements SaveSecureCacheStorage {
   @override
   Future<void> saveSecure({required String key, required String value}) async {
     //ADAPTER CLASS/ INFRA LAYER
-
     await secureStorage.write(key: key, value: value);
+  }
+
+  Future<String?> fetchSecure({required String key}) async {
+    //ADAPTER CLASS/ INFRA LAYER
+
+    final value = await secureStorage.read(key: key);
+    return value;
   }
 }
