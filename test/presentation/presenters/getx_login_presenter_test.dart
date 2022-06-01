@@ -4,12 +4,15 @@ import 'package:mocktail/mocktail.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/account_entity.dart';
 import 'package:tdd_clean_patterns_solid/domain/helpers/domain_error.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/authentication.dart';
+import 'package:tdd_clean_patterns_solid/domain/usecases/save_current_account.dart';
 import 'package:tdd_clean_patterns_solid/presentation/presenters/getx_login_presenter.dart';
 import 'package:tdd_clean_patterns_solid/presentation/protocols/validation.dart';
 
 class ValidationSpy extends Mock implements Validation {}
 
 class AuthenticationSpy extends Mock implements Authentication {}
+
+class SaveCurrentAccountSpy extends Mock implements SaveCurrentAccount {}
 
 void main() {
   late GetxLoginPresenter sut;
@@ -18,6 +21,7 @@ void main() {
   late String email;
   late String password;
   late String token;
+  late SaveCurrentAccountSpy saveCurrentAccount;
   When mockValidationCall({String? field}) => when(
         () => validation.validate(
           field: field ?? any(named: "field"),
@@ -29,6 +33,17 @@ void main() {
         () => authentication
             .auth(AuthenticationParams(email: email, secret: password)),
       );
+
+  When mockSaveCurrentAccountCall() => when(
+        () => saveCurrentAccount.save(
+          any(named: "account"),
+        ),
+      );
+
+  void makeSaveCurrentAccountError() {
+    mockSaveCurrentAccountCall().thenThrow(DomainError.unexpected);
+  }
+
   void mockAuthentication() {
     mockAuthenticationCall().thenAnswer((_) async => AccountEntity(token));
   }
@@ -44,8 +59,11 @@ void main() {
   setUp(() {
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
+    saveCurrentAccount = SaveCurrentAccountSpy();
     sut = GetxLoginPresenter(
-        validation: validation, authentication: authentication);
+        validation: validation,
+        authentication: authentication,
+        saveCurrentAccount: saveCurrentAccount);
     email = faker.internet.email();
     password = faker.internet.password();
     token = faker.jwt.toString();
@@ -92,5 +110,26 @@ void main() {
       ),
     );
     await sut.auth();
+  });
+
+  test("should call SaveCurrentAccount with correct values", () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    await sut.auth();
+    verify(() => saveCurrentAccount.save(AccountEntity(token))).called(1);
+  });
+
+  test("should emit unexpectedError if saveCurrentAccount fails", () async {
+    makeSaveCurrentAccountError();
+
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    await sut.auth();
+    expectLater(sut.isLoading, emits(true));
+    sut.mainError.listen(
+      expectAsync1(
+        (error) => expect(error, "algo errado sucedio"),
+      ),
+    );
   });
 }

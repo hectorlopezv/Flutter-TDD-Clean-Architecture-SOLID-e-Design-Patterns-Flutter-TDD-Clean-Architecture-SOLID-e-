@@ -27,7 +27,7 @@ class HttpAdapter implements HttpClientDemo {
       throw HttpError.serverError;
     }
 
-    _handleResponse(response);
+    return _handleResponse(response);
   }
 
   Map? _handleResponse(http.Response response) {

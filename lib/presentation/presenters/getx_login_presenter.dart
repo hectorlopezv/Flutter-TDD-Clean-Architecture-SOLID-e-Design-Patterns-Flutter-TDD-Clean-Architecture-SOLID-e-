@@ -1,4 +1,5 @@
 import 'package:get/state_manager.dart';
+import 'package:tdd_clean_patterns_solid/domain/usecases/save_current_account.dart';
 
 import '../../domain/helpers/domain_error.dart';
 import '../../domain/usecases/authentication.dart';
@@ -8,22 +9,29 @@ import '../protocols/validation.dart';
 class GetxLoginPresenter extends GetxController implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
+  final SaveCurrentAccount saveCurrentAccount;
 
   String _email = "";
   String _password = "";
 
-  @override
   var emailError = "".obs;
-  @override
   var passwordError = "".obs;
-  @override
   var mainError = "".obs;
-  @override
   var isFormValid = false.obs;
-  @override
   var isLoading = false.obs;
+  var navigateTo = "".obs;
 
-  GetxLoginPresenter({required this.validation, required this.authentication});
+  Stream<String> get navigateToStream => navigateTo.stream;
+  Stream<String> get emailErrorStream => emailError.stream;
+  Stream<String> get passwordErrorStream => passwordError.stream;
+  Stream<String> get mainErrorStream => mainError.stream;
+  Stream<bool> get isFormValidStream => isFormValid.stream;
+  Stream<bool> get isLoadingStream => isLoading.stream;
+
+  GetxLoginPresenter(
+      {required this.validation,
+      required this.authentication,
+      required this.saveCurrentAccount});
 
   void validateEmail(String email) {
     _email = email;
@@ -35,7 +43,6 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
     _password = password;
     passwordError.value =
         validation.validate(field: 'password', value: password) ?? "";
-
     _validateForm();
   }
 
@@ -49,12 +56,16 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
   Future<void> auth() async {
     isLoading.value = true;
     try {
-      await authentication
+      final account = await authentication
           .auth(AuthenticationParams(email: _email, secret: _password));
+
+      await saveCurrentAccount.save(account);
+      navigateTo.value = "/surveys";
     } on DomainError catch (error) {
+      print(error);
+      isLoading.value = false;
       mainError.value = error.description;
     }
-    isLoading.value = false;
   }
 
   void dispose() {}

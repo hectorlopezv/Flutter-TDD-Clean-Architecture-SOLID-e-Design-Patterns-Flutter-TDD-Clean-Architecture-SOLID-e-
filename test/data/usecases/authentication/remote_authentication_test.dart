@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http_client.dart';
-import 'package:tdd_clean_patterns_solid/data/usecases/remote_authentication.dart';
+import 'package:tdd_clean_patterns_solid/data/usecases/authentication/remote_authentication.dart';
 import 'package:tdd_clean_patterns_solid/domain/helpers/domain_error.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/authentication.dart';
 

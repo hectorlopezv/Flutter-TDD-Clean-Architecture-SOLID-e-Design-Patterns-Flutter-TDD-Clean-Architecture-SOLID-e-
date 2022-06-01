@@ -12,7 +12,7 @@ class PasswordValidation extends Equatable implements FieldValidation {
   String? validate(String value) {
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-    final isValid = value.isNotEmpty || regex.hasMatch(value);
+    final isValid = regex.hasMatch(value ?? "");
     return isValid ? null : "please_enter_valid_password";
   }
 

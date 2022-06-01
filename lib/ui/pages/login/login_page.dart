@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/components/login_button.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/components/password_input.dart';
 
+import '../../../main/factories/pages/login/login_presenter_factory.dart';
+import '../../../presentation/presenters/getx_login_presenter.dart';
 import '../../components/login_header.dart';
 import '../../components/spinner_dialog.dart';
 import 'components/email_input.dart';
@@ -17,9 +20,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  GetxLoginPresenter controller = Get.put(makeGetxLoginPresenter());
   @override
   Widget build(BuildContext context) {
-    widget.presenter.mainError.listen((error) {
+    controller.mainError.listen((error) {
       if (error != "") {
         Scaffold.of(context).showSnackBar(
           SnackBar(
@@ -32,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     });
-    widget.presenter.isLoading.listen((isLoading) {
+    controller.isLoading.listen((isLoading) {
       if (isLoading) {
         showDialog(
           context: context,
@@ -45,6 +49,12 @@ class _LoginPageState extends State<LoginPage> {
         if (Navigator.canPop(context)) {
           Navigator.of(context).pop();
         }
+      }
+    });
+    controller.navigateTo.listen((page) {
+      print("page ${page}");
+      if (page.isNotEmpty == true) {
+        Get.offAllNamed(page);
       }
     });
     return Scaffold(

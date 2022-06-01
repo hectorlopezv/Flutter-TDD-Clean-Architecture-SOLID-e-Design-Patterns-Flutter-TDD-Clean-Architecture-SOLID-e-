@@ -1,11 +1,10 @@
-import 'package:get/get.dart';
-
 abstract class LoginPresenter {
-  RxString get emailError;
-  RxString get passwordError;
-  RxString get mainError;
-  RxBool get isFormValid;
-  RxBool get isLoading;
+  Stream<String> get emailErrorStream;
+  Stream<String> get passwordErrorStream;
+  Stream<String> get mainErrorStream;
+  Stream<String> get navigateToStream;
+  Stream<bool> get isFormValidStream;
+  Stream<bool> get isLoadingStream;
 
   void auth();
   void dispose();
