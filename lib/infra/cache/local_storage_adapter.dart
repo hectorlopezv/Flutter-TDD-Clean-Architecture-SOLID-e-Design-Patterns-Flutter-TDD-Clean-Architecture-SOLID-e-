@@ -1,8 +1,11 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tdd_clean_patterns_solid/data/cache/fetch_secure_cache_storage.dart';
+import 'package:tdd_clean_patterns_solid/domain/entities/account_entity.dart';
 
 import '../../data/cache/save_secure_cache_storage.dart';
+import '../../domain/usecases/load_curret_account.dart';
 
-class LocalStorageAdapter implements SaveSecureCacheStorage {
+class LocalStorageAdapter implements SaveSecureCacheStorage, FetchSecureCacheStorage {
   // INTERFACE FROM DATA LAYER
   final FlutterSecureStorage secureStorage;
   LocalStorageAdapter({required this.secureStorage});
@@ -12,10 +15,11 @@ class LocalStorageAdapter implements SaveSecureCacheStorage {
     await secureStorage.write(key: key, value: value);
   }
 
-  Future<String?> fetchSecure({required String key}) async {
+    @override
+  Future<String?> fetchSecure(String key) async {
     //ADAPTER CLASS/ INFRA LAYER
-
     final value = await secureStorage.read(key: key);
     return value;
   }
+
 }
