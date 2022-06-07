@@ -17,7 +17,7 @@ class PassWordInput extends StatelessWidget {
             onChanged: controller.validatePassword,
             decoration: InputDecoration(
               labelText: "password",
-              errorText: controller.passwordError.value,
+              errorText: controller.passwordError.value.toString()== "null"?"":controller.passwordError.value.toString(),
               icon: Icon(
                 Icons.lock,
                 color: Theme.of(context).primaryColorLight,
@@ -39,7 +39,7 @@ class PassWordInput extends StatelessWidget {
                 ],
               ),
             ),
-            visible: controller.passwordError.value.isNotEmpty,
+            visible: controller.passwordError.value.toString() != "null",
           ),
         ],
       ),

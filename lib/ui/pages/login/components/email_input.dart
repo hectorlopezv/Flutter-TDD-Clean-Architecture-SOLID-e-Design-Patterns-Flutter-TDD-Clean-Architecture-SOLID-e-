@@ -16,7 +16,7 @@ class EmailInput extends StatelessWidget {
       builder: (controller) => TextFormField(
         onChanged: controller.validateEmail,
         decoration: InputDecoration(
-          errorText: controller.emailError.value,
+          errorText: controller.emailError.value.toString()=="null"? "":controller.emailError.value.toString(),
           labelText: "Email",
           icon: Icon(
             Icons.email,

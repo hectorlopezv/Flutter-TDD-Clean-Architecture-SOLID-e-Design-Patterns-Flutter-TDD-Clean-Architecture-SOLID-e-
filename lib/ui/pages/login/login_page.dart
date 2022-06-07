@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tdd_clean_patterns_solid/ui/helpers/errors/ui_error.dart';
+import 'package:tdd_clean_patterns_solid/ui/helpers/i18n/resources.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/components/login_button.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/components/password_input.dart';
+
 
 import '../../../main/factories/pages/login/login_presenter_factory.dart';
 import '../../../presentation/presenters/getx_login_presenter.dart';
@@ -23,17 +26,25 @@ class _LoginPageState extends State<LoginPage> {
   GetxLoginPresenter controller = Get.put(makeGetxLoginPresenter());
   @override
   Widget build(BuildContext context) {
-    controller.mainError.listen((error) {
+    controller.mainError.listen((  error) {
       if (error != "") {
-        Scaffold.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red.shade900,
-            content: Text(
-              error,
+
+        final snackBar = SnackBar(
+          content: Text(
+              error.toString(),
               textAlign: TextAlign.center,
             ),
-          ),
-        );
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                // Some code to undo the change.
+              },
+            ),
+          );
+
+          // Find the ScaffoldMessenger in the widget tree
+          // and use it to show a SnackBar.
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     });
     controller.isLoading.listen((isLoading) {
@@ -85,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     FlatButton.icon(
                       icon: Icon(Icons.person),
                       onPressed: null,
-                      label: Text("Crian Conta"),
+                      label: Text(R.strings.addAccount)
                     )
                   ],
                 ),

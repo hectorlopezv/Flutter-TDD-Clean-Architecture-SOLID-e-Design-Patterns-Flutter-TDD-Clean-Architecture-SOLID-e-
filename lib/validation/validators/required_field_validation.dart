@@ -1,3 +1,4 @@
+import '../../presentation/protocols/validation.dart';
 import '../protocols/field_validation.dart';
 
 class RequiredFieldValidation implements FieldValidation {
@@ -7,7 +8,7 @@ class RequiredFieldValidation implements FieldValidation {
   @override
   late final String field;
   @override
-  String? validate(String value) {
-    return value.isNotEmpty == true ? null : value;
+  ValidationError? validate(String value) {
+    return value.isNotEmpty == true ? null : ValidationError.requiredField;
   }
 }

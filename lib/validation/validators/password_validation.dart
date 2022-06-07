@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../presentation/protocols/validation.dart';
 import '../protocols/field_validation.dart';
 
 class PasswordValidation extends Equatable implements FieldValidation {
@@ -9,11 +10,11 @@ class PasswordValidation extends Equatable implements FieldValidation {
   @override
   late final String field;
   @override
-  String? validate(String value) {
+   ValidationError? validate(String value) {
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-    final isValid = regex.hasMatch(value ?? "");
-    return isValid ? null : "please_enter_valid_password";
+    final isValid = regex.hasMatch(value);
+    return isValid ? null : ValidationError.invalidField;
   }
 
   PasswordValidation(this.field);
