@@ -29,5 +29,10 @@ class ValidationBuilder {
     return this;
   }
 
+    ValidationBuilder minLength() {
+    validations.add(PasswordValidation(fieldName));
+    return this;
+  }
+
   List<FieldValidation> build() => validations;
 }

@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                     LoginButton(),
                     FlatButton.icon(
                       icon: Icon(Icons.person),
-                      onPressed: null,
+                      onPressed: controller.goToSignUp,
                       label: Text(R.strings.addAccount)
                     )
                   ],

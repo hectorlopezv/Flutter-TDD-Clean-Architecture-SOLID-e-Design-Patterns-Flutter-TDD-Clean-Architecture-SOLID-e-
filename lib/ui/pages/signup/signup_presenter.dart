@@ -5,9 +5,8 @@ abstract class SignUpPresenter {
   Stream<UIError?> get nameErrorStream;
   Stream<UIError?> get passwordErrorStream;
   Stream<UIError?> get passwordConfirmationErrorStream;
-   Stream<UIError?> get mainErrorStream;
+  Stream<UIError?> get mainErrorStream;
 
-   
   Stream<String> get navigateToStream;
   Stream<bool> get isFormValidStream;
   Stream<bool> get isLoadingStream;
@@ -16,4 +15,6 @@ abstract class SignUpPresenter {
   void validateEmail(String email);
   void validatePassword(String password);
   void validatePasswordConfirmation(String passwordConfirmation);
+  void goToLogin();
+  Future<void> signUp();
 }
