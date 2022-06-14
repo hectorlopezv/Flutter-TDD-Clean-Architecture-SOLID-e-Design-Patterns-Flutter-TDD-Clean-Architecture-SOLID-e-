@@ -18,13 +18,13 @@ void main() {
   var mainError = "".obs;
 
   void mockStreams() {
-    when(() => presenter.emailError).thenAnswer((_) => emailError);
-    when(() => presenter.passwordError).thenAnswer((_) => passwordError);
-    when(() => presenter.isFormValid).thenAnswer((_) => isFormValid);
+    when(() => presenter.emailErrorStream).thenAnswer((_) => emailError);
+    when(() => presenter.passwordErrorStream).thenAnswer((_) => passwordError);
+    when(() => presenter.isFormValidStream).thenAnswer((_) => isFormValid);
 
-    when(() => presenter.isLoading).thenAnswer((_) => isLoading);
+    when(() => presenter.isLoadingStream).thenAnswer((_) => isLoading);
 
-    when(() => presenter.mainError).thenAnswer((_) => mainError);
+    when(() => presenter.mainErrorStream).thenAnswer((_) => mainError);
   }
 
   Future<void> loadPage(WidgetTester tester) async {
