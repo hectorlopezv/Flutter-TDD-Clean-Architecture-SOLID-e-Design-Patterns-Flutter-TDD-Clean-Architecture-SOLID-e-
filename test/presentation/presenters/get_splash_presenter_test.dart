@@ -2,7 +2,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/account_entity.dart';
-import 'package:tdd_clean_patterns_solid/domain/usecases/load_curret_account.dart';
+import 'package:tdd_clean_patterns_solid/domain/usecases/load_current_account/load_curret_account.dart';
 import 'package:tdd_clean_patterns_solid/presentation/presenters/get_splash_presenter.dart';
 
 class LoadCurrentAccountSpy extends Mock implements LoadCurrentAccount {}

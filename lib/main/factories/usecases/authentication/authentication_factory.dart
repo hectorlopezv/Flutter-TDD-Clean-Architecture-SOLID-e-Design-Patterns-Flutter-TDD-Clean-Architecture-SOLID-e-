@@ -1,5 +1,5 @@
 import '../../../../data/usecases/authentication/remote_authentication.dart';
-import '../../../../domain/usecases/authentication.dart';
+import '../../../../domain/usecases/authentication/authentication.dart';
 import '../../http/api_url_factory.dart';
 import '../../http/http_client_factory.dart';
 

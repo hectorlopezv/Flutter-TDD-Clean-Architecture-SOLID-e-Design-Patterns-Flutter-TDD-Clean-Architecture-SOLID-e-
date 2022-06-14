@@ -1,10 +1,10 @@
 import 'package:get/state_manager.dart';
-import 'package:tdd_clean_patterns_solid/domain/usecases/save_current_account.dart';
+import 'package:tdd_clean_patterns_solid/domain/usecases/save_current_account/save_current_account.dart';
 import 'package:tdd_clean_patterns_solid/main/main.dart';
 import 'package:tdd_clean_patterns_solid/ui/helpers/errors/ui_error.dart';
 
 import '../../domain/helpers/domain_error.dart';
-import '../../domain/usecases/authentication.dart';
+import '../../domain/usecases/authentication/authentication.dart';
 import '../../ui/pages/login/login_presenter.dart';
 import '../protocols/validation.dart';
 

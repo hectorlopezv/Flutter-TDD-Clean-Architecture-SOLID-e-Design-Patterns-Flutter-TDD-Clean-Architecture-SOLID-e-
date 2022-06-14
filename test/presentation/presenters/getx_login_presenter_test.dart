@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/account_entity.dart';
 import 'package:tdd_clean_patterns_solid/domain/helpers/domain_error.dart';
-import 'package:tdd_clean_patterns_solid/domain/usecases/authentication.dart';
-import 'package:tdd_clean_patterns_solid/domain/usecases/save_current_account.dart';
+import 'package:tdd_clean_patterns_solid/domain/usecases/authentication/authentication.dart';
+import 'package:tdd_clean_patterns_solid/domain/usecases/save_current_account/save_current_account.dart';
 import 'package:tdd_clean_patterns_solid/presentation/presenters/getx_login_presenter.dart';
 import 'package:tdd_clean_patterns_solid/presentation/protocols/validation.dart';
 

@@ -3,7 +3,7 @@ import 'package:tdd_clean_patterns_solid/data/http/http_client.dart';
 import 'package:tdd_clean_patterns_solid/data/models/remote_account_model.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/account_entity.dart';
 import 'package:tdd_clean_patterns_solid/domain/helpers/domain_error.dart';
-import 'package:tdd_clean_patterns_solid/domain/usecases/authentication.dart';
+import 'package:tdd_clean_patterns_solid/domain/usecases/authentication/authentication.dart';
 
 class RemoteAuthentication implements Authentication {
   final HttpClientDemo httpClient;

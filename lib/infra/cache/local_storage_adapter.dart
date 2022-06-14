@@ -3,7 +3,7 @@ import 'package:tdd_clean_patterns_solid/data/cache/fetch_secure_cache_storage.d
 import 'package:tdd_clean_patterns_solid/domain/entities/account_entity.dart';
 
 import '../../data/cache/save_secure_cache_storage.dart';
-import '../../domain/usecases/load_curret_account.dart';
+import '../../domain/usecases/load_current_account/load_curret_account.dart';
 
 class LocalStorageAdapter implements SaveSecureCacheStorage, FetchSecureCacheStorage {
   // INTERFACE FROM DATA LAYER
