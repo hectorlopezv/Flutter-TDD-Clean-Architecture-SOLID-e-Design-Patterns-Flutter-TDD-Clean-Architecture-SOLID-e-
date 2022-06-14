@@ -29,8 +29,14 @@ class GetxSignInPresenter extends GetxController implements SignUpPresenter {
       required this.addAccount,
       required this.saveCurrentAccount});
 
-  UIError? _validateField({required String field, required String value}) {
-    final error = validation.validate(field: field, value: value);
+  UIError? _validateField(String field) {
+    final formData = {
+      "email": _email,
+      "password": _password,
+      "passwordConfirmation": _passwordConfirmation,
+      "name": _name,
+    };
+    final error = validation.validate(field: field, input: formData);
     switch (error) {
       case ValidationError.invalidField:
         return UIError.invalidField;
@@ -76,29 +82,28 @@ class GetxSignInPresenter extends GetxController implements SignUpPresenter {
   @override
   void validateEmail(String email) {
     _email = email;
-    _emailError.value = _validateField(field: 'email', value: email);
+    _emailError.value = _validateField('email');
     _validateForm();
   }
 
   @override
   void validateName(String name) {
     _name = name;
-    _nameError.value = _validateField(field: 'name', value: name);
+    _nameError.value = _validateField('name');
     _validateForm();
   }
 
   @override
   void validatePassword(String password) {
     _password = password;
-    _passwordError.value = _validateField(field: 'password', value: password);
+    _passwordError.value = _validateField('password');
     _validateForm();
   }
 
   @override
   void validatePasswordConfirmation(String passwordConfirmation) {
     _passwordConfirmation = passwordConfirmation;
-    _passwordConfirmationError.value = _validateField(
-        field: 'passwordConfirmation', value: passwordConfirmation);
+    _passwordConfirmationError.value = _validateField('passwordConfirmation');
     _validateForm();
   }
 

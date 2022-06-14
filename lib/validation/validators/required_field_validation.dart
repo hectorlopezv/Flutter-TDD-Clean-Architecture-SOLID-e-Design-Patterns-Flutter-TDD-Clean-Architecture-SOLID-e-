@@ -8,7 +8,7 @@ class RequiredFieldValidation implements FieldValidation {
   @override
   late final String field;
   @override
-  ValidationError? validate(String value) {
-    return value.isNotEmpty == true ? null : ValidationError.requiredField;
+  ValidationError? validate(Map input) {
+    return input[field].isNotEmpty == true ? null : ValidationError.requiredField;
   }
 }

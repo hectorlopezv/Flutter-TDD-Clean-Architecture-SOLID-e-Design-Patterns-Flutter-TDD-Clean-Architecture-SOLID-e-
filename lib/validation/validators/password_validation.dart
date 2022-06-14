@@ -10,10 +10,10 @@ class PasswordValidation extends Equatable implements FieldValidation {
   @override
   late final String field;
   @override
-   ValidationError? validate(String value) {
+   ValidationError? validate(Map input) {
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-    final isValid = regex.hasMatch(value);
+    final isValid = regex.hasMatch(input[field]);
     return isValid ? null : ValidationError.invalidField;
   }
 
