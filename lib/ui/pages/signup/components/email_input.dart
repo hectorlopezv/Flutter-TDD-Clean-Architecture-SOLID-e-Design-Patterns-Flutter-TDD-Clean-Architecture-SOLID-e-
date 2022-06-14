@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tdd_clean_patterns_solid/main/factories/pages/login/login_presenter_factory.dart';
 
 import '../../../../presentation/presenters/getx_login_presenter.dart';
+import '../../../../presentation/presenters/getx_signin_presenter.dart';
 
 class EmailInput extends StatelessWidget {
   const EmailInput({
@@ -11,9 +12,10 @@ class EmailInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
+    return GetX<GetxSignInPresenter>(
+      init: Get.find<GetxSignInPresenter>(),
         builder: (controller) => TextFormField(
-              onChanged: null,
+              onChanged: controller.validateEmail,
               decoration: InputDecoration(
                 errorText: "",
                 labelText: "Email",

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../../presentation/presenters/getx_signin_presenter.dart';
 
 class NameInput extends StatelessWidget {
   const NameInput({
@@ -7,9 +10,10 @@ class NameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
+    return GetX<GetxSignInPresenter>(
+      init: Get.find<GetxSignInPresenter>(),
         builder: (controller) => TextFormField(
-              onChanged: null,
+              onChanged: controller.validateName,
               decoration: InputDecoration(
                 errorText: "",
                 labelText: "Name",

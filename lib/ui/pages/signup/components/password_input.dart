@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../presentation/presenters/getx_login_presenter.dart';
+import '../../../../presentation/presenters/getx_signin_presenter.dart';
 
 class PassWordInput extends StatelessWidget {
   const PassWordInput({
@@ -10,10 +11,12 @@ class PassWordInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (controller) => Column(
+    return GetX<GetxSignInPresenter>(
+      init: Get.find<GetxSignInPresenter>(),
+      builder: (controller) => Column(
         children: [
           TextFormField(
-            onChanged: null,
+            onChanged: controller.validatePassword,
             decoration: InputDecoration(
               labelText: "password",
               errorText: "",

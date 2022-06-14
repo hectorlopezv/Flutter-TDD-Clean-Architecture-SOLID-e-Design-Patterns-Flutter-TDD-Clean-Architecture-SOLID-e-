@@ -1,4 +1,4 @@
-enum UIError { unexpected, invalidCredentials, requiredField, invalidField, empty }
+enum UIError { unexpected, invalidCredentials, requiredField, invalidField, empty, emailInUse }
 
 extension DomainErrorExtension on UIError {
   String get description {
@@ -9,6 +9,8 @@ extension DomainErrorExtension on UIError {
         return "unexpected error";
       case UIError.requiredField:
         return "campo obrigatório";
+      case UIError.emailInUse:
+        return "email in use";
       default:
         return "algo errado aconteceu, tente novamente em breve ";
     }
