@@ -54,11 +54,9 @@ class GetxSignInPresenter extends GetxController implements SignUpPresenter {
         _nameError.value == null &&
         _passwordError.value == null &&
         _passwordConfirmationError.value == null;
-     
-
   }
 
-
+  
   @override
   Stream<UIError?> get emailErrorStream => _emailError.stream;
 
