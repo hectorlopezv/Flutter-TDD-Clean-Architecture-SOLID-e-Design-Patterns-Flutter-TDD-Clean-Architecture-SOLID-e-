@@ -9,7 +9,7 @@ import 'package:tdd_clean_patterns_solid/domain/helpers/domain_error.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/add_account/add_account.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/authentication/authentication.dart';
 
-class HttpClientDemoSpy extends Mock implements HttpClientDemo {}
+class HttpClientDemoSpy extends Mock implements HttpClientDemo<Map?> {}
 
 void main() {
   late RemoteAddAccount sut;

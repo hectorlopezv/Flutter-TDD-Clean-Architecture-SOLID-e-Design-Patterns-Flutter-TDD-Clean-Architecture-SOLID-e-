@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:tdd_clean_patterns_solid/data/http/http.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http_client.dart';
 
-class HttpAdapter implements HttpClientDemo {
+class HttpAdapter implements HttpClientDemo<Map?> {
   final http.Client client;
   HttpAdapter(this.client);
   @override
