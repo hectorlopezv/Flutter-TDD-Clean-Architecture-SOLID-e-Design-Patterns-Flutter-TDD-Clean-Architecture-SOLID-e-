@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tdd_clean_patterns_solid/main/factories/pages/login/login_presenter_factory.dart';
+import 'package:tdd_clean_patterns_solid/main/factories/pages/signIn/signin_presenter_factory.dart';
 
 import '../../../../presentation/presenters/getx_login_presenter.dart';
 import '../../../../presentation/presenters/getx_signin_presenter.dart';
@@ -12,9 +13,8 @@ class EmailInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<GetxSignInPresenter>(
-      init: Get.find<GetxSignInPresenter>(),
-        builder: (controller) => TextFormField(
+     final controller =  Get.find<GetxSignInPresenter>();
+    return TextFormField(
               onChanged: controller.validateEmail,
               decoration: InputDecoration(
                 errorText: "",
@@ -25,6 +25,6 @@ class EmailInput extends StatelessWidget {
                 ),
               ),
               keyboardType: TextInputType.emailAddress,
-            ),);
+            );
   }
 }

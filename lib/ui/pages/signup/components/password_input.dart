@@ -11,9 +11,8 @@ class PassWordInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<GetxSignInPresenter>(
-      init: Get.find<GetxSignInPresenter>(),
-      builder: (controller) => Column(
+    final controller =  Get.find<GetxSignInPresenter>();
+    return Column(
         children: [
           TextFormField(
             onChanged: controller.validatePassword,
@@ -44,7 +43,6 @@ class PassWordInput extends StatelessWidget {
             visible: false
           ),
         ],
-      ),
     );
   }
 }

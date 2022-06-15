@@ -11,12 +11,12 @@ class SignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<GetxSignInPresenter>(
-      init: Get.find<GetxSignInPresenter>(), builder: (controller) => RaisedButton(
-        onPressed: null,
+    final controller =  Get.find<GetxSignInPresenter>();
+    return  RaisedButton(
+        onPressed: controller.signUp,
         child: Text(
-          "Entrar".toUpperCase(),
-        ),
-      ),);
+          "Login".toUpperCase(),
+      ),
+      );
   }
 }

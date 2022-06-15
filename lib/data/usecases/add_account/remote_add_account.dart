@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:tdd_clean_patterns_solid/data/http/http_error.dart';
 import 'package:tdd_clean_patterns_solid/data/models/remote_account_model.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/account_entity.dart';

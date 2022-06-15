@@ -64,14 +64,15 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
   }
 
   void _validateForm() {
-    isFormValid.value = emailError.value != "" &&
-        passwordError.value != "" &&
+    isFormValid.value = emailError.value ==null &&
+        passwordError.value == null &&
         _email != "" &&
         _password != "";
   }
 
   Future<void> auth() async {
     isLoading.value = true;
+    mainError.value = null;
     try {
       final account = await authentication
           .auth(AuthenticationParams(email: _email, secret: _password));

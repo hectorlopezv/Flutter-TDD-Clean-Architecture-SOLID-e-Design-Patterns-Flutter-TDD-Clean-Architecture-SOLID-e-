@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tdd_clean_patterns_solid/main/factories/pages/signIn/signin_presenter_factory.dart';
+import 'package:tdd_clean_patterns_solid/presentation/presenters/getx_signin_presenter.dart';
 import 'package:tdd_clean_patterns_solid/ui/components/components.dart';
 import 'package:tdd_clean_patterns_solid/ui/helpers/i18n/resources.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/signup/components/email_input.dart';
@@ -14,12 +16,12 @@ import '../../components/spinner_dialog.dart';
 class SignUpPage extends StatelessWidget {
   final SignUpPresenter presenter;
   const SignUpPage({Key? key, required this.presenter}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-
     //Loading Stream
-    presenter.isLoadingStream.listen((isLoading) {
+     final controller = Get.put<GetxSignInPresenter>(makeGetxSignInPresenter());
+    
+    controller.isLoadingStream.listen((isLoading) {
       if (isLoading) {
         showDialog(
           context: context,
@@ -35,7 +37,7 @@ class SignUpPage extends StatelessWidget {
       }
     });
     //Error stream
-    presenter.mainErrorStream.listen((error) {
+    controller.mainErrorStream.listen((error) {
       if (error != null) {
         final snackBar = SnackBar(
           content: Text(
@@ -57,20 +59,18 @@ class SignUpPage extends StatelessWidget {
     });
 
     //Redirection
-    presenter.navigateToStream.listen((page) {
+    controller.navigateToStream.listen((page) {
        if (page.isNotEmpty == true) {
         Get.offAllNamed(page);
       }
     });
-
-
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            LoginHeader(),
+           LoginHeader(),
             Text(
               "Login".toUpperCase(),
               textAlign: TextAlign.center,
@@ -80,7 +80,7 @@ class SignUpPage extends StatelessWidget {
               child: Form(
                 child: Column(
                   children: [
-                    NameInput(),
+                   NameInput(),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: EmailInput(),
@@ -93,11 +93,12 @@ class SignUpPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: PassWordConfirmationInput(),
                     ),
-                    SignInButton(),
+                   SignInButton(),
                     FlatButton.icon(
                         icon: Icon(Icons.exit_to_app),
-                        onPressed: presenter.goToLogin,
-                        label: Text("Login"))
+                        onPressed: controller.goToLogin,
+                        label: Text("Login"),
+                  ),
                   ],
                 ),
               ),

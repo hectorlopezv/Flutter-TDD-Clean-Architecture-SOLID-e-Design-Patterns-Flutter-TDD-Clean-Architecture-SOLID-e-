@@ -39,7 +39,7 @@ class PassWordInput extends StatelessWidget {
                 ],
               ),
             ),
-            visible: controller.passwordErrorStream.toString() != "null",
+            visible: controller.passwordError.value.toString() == "null" ? false : true,
           ),
         ],
       ),

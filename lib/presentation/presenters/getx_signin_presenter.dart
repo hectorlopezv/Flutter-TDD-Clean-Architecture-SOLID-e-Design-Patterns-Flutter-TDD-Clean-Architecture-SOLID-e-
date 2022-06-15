@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:get/get.dart';
 import 'package:tdd_clean_patterns_solid/domain/helpers/helpers.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/add_account/add_account.dart';
@@ -15,7 +17,7 @@ class GetxSignInPresenter extends GetxController implements SignUpPresenter {
   String _passwordConfirmation = "";
   String _name = "";
 
-  final _isFormValid = false.obs;
+  final isFormValid = false.obs;
   final _navigateTo = "".obs;
   final _isLoading = false.obs;
   final _mainError = Rx<UIError?>(null);
@@ -47,12 +49,15 @@ class GetxSignInPresenter extends GetxController implements SignUpPresenter {
     }
   }
 
-  void _validateForm() {
-    _isFormValid.value = _emailError.value != "" &&
-        _nameError.value != "" &&
-        _passwordError.value != "" &&
-        _passwordConfirmationError.value != "";
+  void validateForm() {
+   isFormValid.value =  _emailError.value == null &&
+        _nameError.value == null &&
+        _passwordError.value == null &&
+        _passwordConfirmationError.value == null;
+     
+
   }
+
 
   @override
   Stream<UIError?> get emailErrorStream => _emailError.stream;
@@ -83,33 +88,34 @@ class GetxSignInPresenter extends GetxController implements SignUpPresenter {
   void validateEmail(String email) {
     _email = email;
     _emailError.value = _validateField('email');
-    _validateForm();
+    validateForm();
   }
 
   @override
   void validateName(String name) {
     _name = name;
     _nameError.value = _validateField('name');
-    _validateForm();
+    validateForm();
   }
 
   @override
   void validatePassword(String password) {
     _password = password;
     _passwordError.value = _validateField('password');
-    _validateForm();
+    validateForm();
   }
 
   @override
   void validatePasswordConfirmation(String passwordConfirmation) {
     _passwordConfirmation = passwordConfirmation;
     _passwordConfirmationError.value = _validateField('passwordConfirmation');
-    _validateForm();
+    validateForm();
   }
 
   @override
   Future<void> signUp() async {
     _isLoading.value = true;
+    _mainError.value = null;
     try {
       final account = await addAccount.add(AddAccountParams(
           email: _email,
@@ -132,6 +138,6 @@ class GetxSignInPresenter extends GetxController implements SignUpPresenter {
   }
 
   void goToLogin() {
-    _navigateTo.value = "/signup";
+    _navigateTo.value = "/login";
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tdd_clean_patterns_solid/main/factories/pages/signIn/signin_page_factory.dart';
 import 'package:tdd_clean_patterns_solid/main/factories/pages/splash/splash_page_factory.dart';
 
 import 'factories/pages/login/login_page_factory.dart';
@@ -51,8 +52,9 @@ class App extends StatelessWidget {
       ),
       initialRoute: "/",
       getPages: [
-           GetPage(name: "/", page: makeSplashPage, transition: Transition.fadeIn),
+        GetPage(name: "/", page: makeSplashPage, transition: Transition.fadeIn),
         GetPage(name: "/login", page: makeLoginPage, transition: Transition.fadeIn),
+        GetPage(name: "/signup", page: makeSignInPage, transition: Transition.fadeIn),
         GetPage(
           name: "/surveys",
           page: () => Scaffold(

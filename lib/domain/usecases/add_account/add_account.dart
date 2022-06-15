@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 import '../../entities/account_entity.dart';
 
 abstract class AddAccount {
+  AddAccount(AddAccountParams addAccountParams);
+
   Future<AccountEntity> add(AddAccountParams params);
 }
 
