@@ -23,6 +23,9 @@ class HttpAdapter implements HttpClientDemo<Map?> {
         response =
             await client.post(urlParse, headers: headers, body: parsedBody);
       }
+      else if (method== "get"){
+        response = await client.post(urlParse, headers: headers);
+      }
     } catch (e) {
       throw HttpError.serverError;
     }
