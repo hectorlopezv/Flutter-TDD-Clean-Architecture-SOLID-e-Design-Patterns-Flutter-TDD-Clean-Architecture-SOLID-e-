@@ -44,7 +44,11 @@ class _LoginPageState extends State<LoginPage> {
 
           // Find the ScaffoldMessenger in the widget tree
           // and use it to show a SnackBar.
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          if(context != null) {
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+
+          
       }
     });
     controller.isLoading.listen((isLoading) {
@@ -69,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
     return Scaffold(
+      resizeToAvoidBottomInset: true,
         body: SafeArea(
       child: SingleChildScrollView(
         child: Column(
