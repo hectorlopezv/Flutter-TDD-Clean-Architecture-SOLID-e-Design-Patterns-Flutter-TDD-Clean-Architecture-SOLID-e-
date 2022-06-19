@@ -12,7 +12,7 @@ class SurveyItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: viewModel.didAnswer ?  Theme.of(context).primaryColor : Colors.green,
             boxShadow: [
               BoxShadow(
                   color: Colors.black12,

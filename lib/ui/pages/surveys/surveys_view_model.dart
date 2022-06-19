@@ -1,7 +1,7 @@
 class SurveyViewModel {
   final String id;
   final String question;
-  final String didAnswer;
+  final bool didAnswer;
   final String date;
 
   SurveyViewModel({
