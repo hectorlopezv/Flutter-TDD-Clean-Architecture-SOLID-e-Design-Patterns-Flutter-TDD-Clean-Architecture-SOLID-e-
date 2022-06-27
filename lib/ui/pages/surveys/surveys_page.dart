@@ -15,6 +15,8 @@ class SurveysPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(makeGetxSurveysPresenter());
+    controller.loadData();
+
     controller.isLoadingStream.listen((isLoading) {
       if (isLoading) {
         showDialog(
@@ -30,48 +32,28 @@ class SurveysPage extends StatelessWidget {
         }
       }
     });
-    controller.navigateTo.listen((page) {
-      print("page ${page}");
-      if (page.isNotEmpty == true) {
-        Get.offAllNamed(page);
-      }
-    });
 
-    //Error stream
-    controller.mainErrorStream.listen((error) {
-      if (error != null) {
-        final snackBar = SnackBar(
-          content: Text(
-            error.toString(),
-            textAlign: TextAlign.center,
-          ),
-          action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () {
-              // Some code to undo the change.
-            },
-          ),
-        );
-
-        // Find the ScaffoldMessenger in the widget tree
-        // and use it to show a SnackBar.
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    });
     return StreamBuilder<List<SurveyViewModel>>(
-        stream: presenter.loadSurveysStream,
+        stream: controller.surveysStream,
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Column(
+          Widget error = SizedBox(
+            height: 0,
+          );
+          Widget data = SizedBox(
+            height: 0,
+          );
+          if (snapshot.hasError || !snapshot.hasData) {
+            error = Column(
               children: [
                 Text("Error"),
                 Text(snapshot.error.toString()),
-                RaisedButton(onPressed: presenter.loadData, child: Text("Reload")),
+                RaisedButton(
+                    onPressed: presenter.loadData, child: Text("Reload")),
               ],
             );
           }
           if (snapshot.hasData) {
-            return Padding(
+            data = Padding(
               padding: EdgeInsets.all(20),
               child: CarouselSlider(
                 items: snapshot.data
@@ -83,8 +65,16 @@ class SurveysPage extends StatelessWidget {
                     CarouselOptions(aspectRatio: 1, enlargeCenterPage: true),
               ),
             );
-          }
-          return SizedBox(height: 0);
+          } 
+
+          return Scaffold(
+            appBar: AppBar(
+              
+                title: Text("Surveys"),
+                backgroundColor: Colors.red,
+                centerTitle: true),
+                 body: Center(child: Padding(padding:EdgeInsets.all(40),child: Column(children: [error, data], mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,))),
+          );
         });
   }
 }

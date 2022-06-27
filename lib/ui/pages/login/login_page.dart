@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
     });
     controller.navigateTo.listen((page) {
       print("page ${page}");
+
       if (page.isNotEmpty == true) {
         Get.offAllNamed(page);
       }
