@@ -15,7 +15,7 @@ class SurveysPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(makeGetxSurveysPresenter());
-    controller.loadData();
+   
 
     controller.isLoadingStream.listen((isLoading) {
       if (isLoading) {
@@ -32,7 +32,7 @@ class SurveysPage extends StatelessWidget {
         }
       }
     });
-
+ controller.loadData();
     return StreamBuilder<List<SurveyViewModel>>(
         stream: controller.surveysStream,
         builder: (context, snapshot) {
@@ -42,7 +42,7 @@ class SurveysPage extends StatelessWidget {
           Widget data = SizedBox(
             height: 0,
           );
-          if (snapshot.hasError || !snapshot.hasData) {
+          if (snapshot.hasError) {
             error = Column(
               children: [
                 Text("Error"),

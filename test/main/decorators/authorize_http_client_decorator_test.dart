@@ -1,11 +1,12 @@
-
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tdd_clean_patterns_solid/data/cache/fetch_secure_cache_storage.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http_client.dart';
 import 'package:http/http.dart' as http;
-class AuthorizeHttpClientDecorator implements HttpClientDemo{
+import 'package:tdd_clean_patterns_solid/data/http/http_error.dart';
+
+class AuthorizeHttpClientDecorator implements HttpClientDemo {
   final FetchSecureCacheStorage fetchSecureCacheStorage;
   final HttpClientDemo decoratee;
 
@@ -16,13 +17,19 @@ class AuthorizeHttpClientDecorator implements HttpClientDemo{
       required String method,
       Map? body,
       Map? headers}) async {
-    //Base Case
-    final token = await fetchSecureCacheStorage.fetchSecure("token");
+    try {
+      //Base Case
+      final token = await fetchSecureCacheStorage.fetchSecure("token");
 
-    final authorizeHeaders = headers ?? {}
-      ..addAll({"x-access-token": token});
-    return  await decoratee.request(
-        url: url, method: method, body: body, headers: authorizeHeaders);
+      final authorizeHeaders = headers ?? {}
+        ..addAll({"x-access-token": token});
+      return await decoratee.request(
+          url: url, method: method, body: body, headers: authorizeHeaders);
+    } on HttpError {
+      rethrow;
+    } catch (error) {
+      throw HttpError.forbidden;
+    }
   }
 }
 
@@ -45,6 +52,12 @@ void main() {
     token = faker.guid.guid();
     when(() => fetchSecureCacheStorage.fetchSecure(any()))
         .thenAnswer((_) async => token);
+  }
+
+  void mockTokenError() {
+    token = faker.guid.guid();
+    when(() => fetchSecureCacheStorage.fetchSecure(any()))
+        .thenThrow(Exception());
   }
 
   void mockHttpResponse() {

@@ -6,7 +6,7 @@ import '../../../domain/helpers/domain_error.dart';
 import '../../http/http_client.dart';
 
 class RemoteAddAccount implements AddAccount {
-  final HttpClientDemo<Map?> httpClient;
+  final HttpClientDemo<dynamic> httpClient;
   final String url;
   RemoteAddAccount({required this.httpClient, required this.url});
 

@@ -6,7 +6,7 @@ import 'package:tdd_clean_patterns_solid/domain/helpers/domain_error.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/authentication/authentication.dart';
 
 class RemoteAuthentication implements Authentication {
-  final HttpClientDemo<Map?> httpClient;
+  final HttpClientDemo<dynamic> httpClient;
   final String url;
   RemoteAuthentication({required this.httpClient, required this.url});
 

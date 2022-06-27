@@ -21,7 +21,7 @@ class RemoteSurveyModel {
     return RemoteSurveyModel(
       id: json["id"],
       question: json["question"],
-      date: json["dateTime"],
+      date: json["date"],
       didAnswer: json["didAnswer"],
     );
   }
