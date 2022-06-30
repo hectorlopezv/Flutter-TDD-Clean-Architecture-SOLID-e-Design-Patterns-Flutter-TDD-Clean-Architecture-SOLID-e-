@@ -1,11 +1,14 @@
+import 'package:equatable/equatable.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http_error.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/survey_entity.dart';
 
-class RemoteSurveyModel {
+class RemoteSurveyModel extends Equatable {
   final String id;
   final String question;
   final String date;
   final bool didAnswer;
+  
+  List get props => [id, question, date, didAnswer];
 
   RemoteSurveyModel(
       {required this.id,

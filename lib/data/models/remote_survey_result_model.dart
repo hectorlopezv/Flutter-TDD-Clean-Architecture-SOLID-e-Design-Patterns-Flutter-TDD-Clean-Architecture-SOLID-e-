@@ -8,6 +8,8 @@ class RemoteSurveyResultModel {
   final String question;
   final List<RemoteSurveyAnswerModel> answers;
 
+  List get props => [surveyId, question, answers];
+
   RemoteSurveyResultModel(
       {required this.surveyId,
       required this.question,
