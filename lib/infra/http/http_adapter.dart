@@ -21,10 +21,10 @@ class HttpAdapter implements HttpClientDemo {
       if (method == "post") {
         final parsedBody = body != null ? jsonEncode(body) : null;
         response =
-            await client.post(urlParse, headers: defaultHeaders, body: parsedBody);
+            await client.post(urlParse, headers: defaultHeaders, body: parsedBody).timeout(Duration(seconds: 5));
       }
       else if (method == "get"){
-        response = await client.get(urlParse, headers: defaultHeaders);
+        response = await client.get(urlParse, headers: defaultHeaders).timeout(Duration(seconds: 5));
       }
     } catch (e) {
       throw HttpError.serverError;
