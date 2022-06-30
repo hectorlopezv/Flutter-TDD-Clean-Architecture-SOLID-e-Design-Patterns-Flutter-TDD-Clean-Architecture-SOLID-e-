@@ -1,6 +1,6 @@
 import '../../../../presentation/protocols/validation.dart';
 import '../../../../validation/protocols/field_validation.dart';
-import '../../../../validation/validators/validation_composite.dart';
+import '../../../composites/validation_composite.dart';
 import '../../../builders/validation_builder.dart';
 
 Validation makeLoginValidation() {

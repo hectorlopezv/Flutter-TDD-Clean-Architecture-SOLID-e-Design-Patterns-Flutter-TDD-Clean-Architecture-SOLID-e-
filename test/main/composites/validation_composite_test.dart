@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tdd_clean_patterns_solid/validation/protocols/field_validation.dart';
-import 'package:tdd_clean_patterns_solid/validation/validators/validation_composite.dart';
+import 'package:tdd_clean_patterns_solid/main/composites/validation_composite.dart';
 
 class FieldValidationSpy extends Mock implements FieldValidation {}
 

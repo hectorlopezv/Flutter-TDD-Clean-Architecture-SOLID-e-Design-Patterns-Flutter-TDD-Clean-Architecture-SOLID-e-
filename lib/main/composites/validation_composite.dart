@@ -1,5 +1,5 @@
 import '../../presentation/protocols/validation.dart';
-import '../protocols/field_validation.dart';
+import '../../validation/protocols/field_validation.dart';
 
 class ValidationComposite implements Validation {
   late List<FieldValidation> validations;
@@ -14,5 +14,5 @@ class ValidationComposite implements Validation {
       }
     }
     return error;
-  }
+  } 
 }
