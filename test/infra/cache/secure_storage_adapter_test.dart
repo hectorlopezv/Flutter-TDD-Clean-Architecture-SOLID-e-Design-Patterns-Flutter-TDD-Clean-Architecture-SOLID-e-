@@ -2,7 +2,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:tdd_clean_patterns_solid/infra/cache/local_storage_adapter.dart';
+import 'package:tdd_clean_patterns_solid/infra/cache/secure_storage_adapter.dart';
 
 class FlutterSecureStorageSpy extends Mock implements FlutterSecureStorage {}
 
