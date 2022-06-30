@@ -15,7 +15,7 @@ class LocalSurveyModel {
 
   factory LocalSurveyModel.fromJson(Map json) {
     if(!json.keys.toSet().containsAll(["id", "question", "date", "didAnswer"])) {
-      throw HttpError.invalidData;
+      throw Exception();
     }
       
     return LocalSurveyModel(
@@ -26,6 +26,25 @@ class LocalSurveyModel {
     );
   }
 
+  factory LocalSurveyModel.fromEntity(SurveryEntity entity) {
+      
+    return LocalSurveyModel(
+      id: entity.id,
+      question: entity.question,
+      date: entity.dateTime.toIso8601String(),
+      didAnswer: entity.didAnswer,
+    );
+  }
+
   SurveryEntity toEntity() => SurveryEntity(
       id: id, question: question, dateTime: DateTime.parse(date), didAnswer: didAnswer);
+
+
+  Map<String, String> toJson() => 
+    {
+      "id": id,
+      "question": question,
+      "date": date,
+      "didAnswer": didAnswer.toString(),
+    };
 }
