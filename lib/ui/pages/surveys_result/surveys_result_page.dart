@@ -33,10 +33,8 @@ class SurveysResultPage extends StatelessWidget {
                 return SpinnerDialog();
               },
             );
-          } else {
-            if (Navigator.canPop(context)) {
-              Navigator.of(context).pop();
-            }
+          } else if(isLoading == false){
+   
           }
         });
 

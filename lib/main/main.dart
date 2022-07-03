@@ -65,7 +65,10 @@ class App extends StatelessWidget {
             name: "/surveys",
             page: makeSurveysPage,
             transition: Transition.fadeIn),
-        GetPage(name: "/survey_result/:survey_id", page: makeSurveysResultPage)
+        GetPage(
+            name: "/survey_result/:survey_id",
+            page: makeSurveysResultPage,
+            transition: Transition.fadeIn)
       ],
     );
   }

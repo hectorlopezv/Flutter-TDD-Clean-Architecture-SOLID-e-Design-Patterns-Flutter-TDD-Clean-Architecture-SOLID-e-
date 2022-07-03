@@ -28,14 +28,16 @@ class SurveysPage extends StatelessWidget {
             return SpinnerDialog();
           },
         );
-      } else {
+      } else if(isLoading == false) {
         if (Navigator.canPop(context)) {
           Navigator.of(context).pop();
         }
       }
     });
     controller.navigateToStream.listen((page) {
-      Get.offNamed("/survey_result/$page");
+      
+      Navigator.of(context).pushNamed("/survey_result/$page");
+  
     });
 
     return Scaffold(
