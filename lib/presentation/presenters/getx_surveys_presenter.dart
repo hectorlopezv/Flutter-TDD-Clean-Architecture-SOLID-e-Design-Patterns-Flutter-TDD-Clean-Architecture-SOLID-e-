@@ -9,12 +9,13 @@ import '../../ui/helpers/errors/ui_error.dart';
 class GetxSurveysPresenter extends GetxController implements SurveysPresenter {
   final LoadSurveys loadSurveys;
   final _isLoading = true.obs;
+  final _navigateTo = Rx<String>("");
   final _surveys = Rx<List<SurveyViewModel>>([]);
 
   @override
   onInit() async {
     super.onInit();
-   await loadData();
+    await loadData();
   }
 
   @override
@@ -31,7 +32,7 @@ class GetxSurveysPresenter extends GetxController implements SurveysPresenter {
               ))
           .toList();
     } on DomainError catch (error) {
-      if (_surveys.subject.isClosed) {
+      if (_surveys.subject.isClosed == false) {
         _surveys.value = [];
         _surveys.subject.addError(UIError.unexpected.description);
       }
@@ -47,4 +48,12 @@ class GetxSurveysPresenter extends GetxController implements SurveysPresenter {
 
   @override
   Stream<List<SurveyViewModel>> get surveysStream => _surveys.stream;
+
+  @override
+  Stream<String> get navigateToStream => _navigateTo.stream;
+
+  @override
+  void goToSurveyResult(String surveyId) {
+    _navigateTo.value = surveyId;
+  }
 }

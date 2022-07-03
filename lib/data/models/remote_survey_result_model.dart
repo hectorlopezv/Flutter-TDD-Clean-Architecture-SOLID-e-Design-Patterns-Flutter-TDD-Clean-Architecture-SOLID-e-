@@ -11,26 +11,30 @@ class RemoteSurveyResultModel {
   List get props => [surveyId, question, answers];
 
   RemoteSurveyResultModel(
-      {required this.surveyId,
-      required this.question,
-      required this.answers
-      });
+      {required this.surveyId, required this.question, required this.answers});
 
   factory RemoteSurveyResultModel.fromJson(Map json) {
-    if(!json.keys.toSet().containsAll(["surveyId", "question", "answers"])) {
+    final valid = json.keys
+        .toSet()
+        .containsAll({"surveyId", "question", "answers"});
+    if (!valid) {
       throw HttpError.invalidData;
     }
-      
+
     return RemoteSurveyResultModel(
-      surveyId: json["id"],
+      surveyId: json["surveyId"],
       question: json["question"],
-      answers: json["answers"].map<RemoteSurveyAnswerModel>((answerJson)=> RemoteSurveyAnswerModel.fromJson(json)).toList(),
+      answers: json["answers"]
+          .map<RemoteSurveyAnswerModel>(
+              (answerJson) => RemoteSurveyAnswerModel.fromJson(answerJson))
+          .toList(),
     );
   }
 
   SurveyResultEntity toEntity() => SurveyResultEntity(
       surveyId: surveyId,
       question: question,
-      answers: answers.map<SurveyAnswerEntity>((answer)=> answer.toEntity()).toList()
-  );
+      answers: answers
+          .map<SurveyAnswerEntity>((answer) => answer.toEntity())
+          .toList());
 }

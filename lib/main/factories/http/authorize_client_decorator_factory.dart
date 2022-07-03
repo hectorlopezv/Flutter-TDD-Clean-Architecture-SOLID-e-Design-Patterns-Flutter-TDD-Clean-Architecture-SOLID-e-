@@ -7,4 +7,7 @@ import 'package:tdd_clean_patterns_solid/main/factories/cache/secure_storage_ada
 import 'package:tdd_clean_patterns_solid/main/factories/http/http_client_factory.dart';
 
 HttpClientDemo makeAuthorizeHttpClientDecorator() =>
-    AuthorizeHttpClientDecorator(decoratee: makeHttpAdapter(), fetchSecureCacheStorage: makeSecureStorageAdapter());
+    AuthorizeHttpClientDecorator(
+      decoratee: makeHttpAdapter(),
+      fetchSecureCacheStorage: makeSecureStorageAdapter(),
+    );

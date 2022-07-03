@@ -52,12 +52,19 @@ class App extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: "/survey_result/3",
+      initialRoute: "/",
       getPages: [
         GetPage(name: "/", page: makeSplashPage, transition: Transition.fadeIn),
-        GetPage(name: "/login", page: makeLoginPage, transition: Transition.fadeIn),
-        GetPage(name: "/signup", page: makeSignInPage, transition: Transition.fadeIn),
-        GetPage(name: "/surveys", page: makeSurveysPage, transition: Transition.fadeIn),
+        GetPage(
+            name: "/login", page: makeLoginPage, transition: Transition.fadeIn),
+        GetPage(
+            name: "/signup",
+            page: makeSignInPage,
+            transition: Transition.fadeIn),
+        GetPage(
+            name: "/surveys",
+            page: makeSurveysPage,
+            transition: Transition.fadeIn),
         GetPage(name: "/survey_result/:survey_id", page: makeSurveysResultPage)
       ],
     );

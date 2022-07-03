@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tdd_clean_patterns_solid/ui/components/active_icon.dart';
-import 'package:tdd_clean_patterns_solid/ui/components/disable_icon.dart';
 import 'package:tdd_clean_patterns_solid/ui/components/survey_answer.dart';
-import 'package:tdd_clean_patterns_solid/ui/components/survey_header.dart';
-import 'package:tdd_clean_patterns_solid/ui/pages/surveys_result/survey_answer_viewmodel.dart';
+import 'package:tdd_clean_patterns_solid/ui/pages/surveys/components/survey_header.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys_result/survey_result_viewmodel.dart';
 
 class SurveyResult extends StatelessWidget {
@@ -19,7 +16,6 @@ class SurveyResult extends StatelessWidget {
             question: viewModel.question,
           );
         }
-
         return SurveyAnswer(viewModel: viewModel.answers[index -1],);
       },
       itemCount: viewModel.answers.length + 1,
