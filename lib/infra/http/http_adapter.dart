@@ -19,14 +19,18 @@ class HttpAdapter implements HttpClientDemo {
     var response = http.Response('', 500);
 
     try {
+      final parsedBody = body != null ? jsonEncode(body) : null;
       if (method == "post") {
-        final parsedBody = body != null ? jsonEncode(body) : null;
         response = await client
             .post(urlParse, headers: defaultHeaders, body: parsedBody)
             .timeout(Duration(seconds: 5));
       } else if (method == "get") {
         response = await client
             .get(urlParse, headers: defaultHeaders)
+            .timeout(Duration(seconds: 5));
+      } else if (method == "put") {
+        response = await client
+            .put(urlParse, headers: defaultHeaders, body: parsedBody)
             .timeout(Duration(seconds: 5));
       }
     } catch (e) {

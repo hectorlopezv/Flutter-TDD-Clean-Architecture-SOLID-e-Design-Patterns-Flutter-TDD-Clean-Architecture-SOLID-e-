@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:network_image_mock/network_image_mock.dart';
 import 'package:tdd_clean_patterns_solid/main/factories/pages/surveys_result/survey_results_presenter_factory.dart';
 import 'package:tdd_clean_patterns_solid/ui/components/reload_screen.dart';
 import 'package:tdd_clean_patterns_solid/ui/components/spinner_dialog.dart';
 import 'package:tdd_clean_patterns_solid/ui/components/survey_result.dart';
-import 'package:tdd_clean_patterns_solid/ui/pages/surveys/surveys_presenter.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys_result/survey_result_presenter.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys_result/survey_result_viewmodel.dart';
 
@@ -49,6 +47,7 @@ class SurveysResultPage extends StatelessWidget {
               }
               if (snapshot.hasData) {
                 return SurveyResult(
+                  onSave: controller.save,
                   viewModel: snapshot.data!,
                 );
               }
