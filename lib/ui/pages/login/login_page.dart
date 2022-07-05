@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           
       }
     });
-    controller.isLoading.listen((isLoading) {
+    controller.isLoadingStream.listen((isLoading) {
       if (isLoading) {
         showDialog(
           context: context,

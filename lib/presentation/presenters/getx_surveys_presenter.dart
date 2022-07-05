@@ -2,13 +2,17 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tdd_clean_patterns_solid/domain/helpers/helpers.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/load_surveys/load_surverys.dart';
+import 'package:tdd_clean_patterns_solid/presentation/mixins/loading_manager.dart';
+import 'package:tdd_clean_patterns_solid/presentation/mixins/session_manager.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys/surveys_presenter.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys/surveys_view_model.dart';
 import '../../ui/helpers/errors/ui_error.dart';
 
-class GetxSurveysPresenter extends GetxController implements SurveysPresenter {
+class GetxSurveysPresenter extends GetxController
+    with SessionManager, LoadingManager
+    implements SurveysPresenter {
   final LoadSurveys loadSurveys;
-  final _isLoading = true.obs;
+
   final _navigateTo = Rx<String>("");
   final _surveys = Rx<List<SurveyViewModel>>([]);
 
@@ -21,7 +25,8 @@ class GetxSurveysPresenter extends GetxController implements SurveysPresenter {
   @override
   Future<void> loadData() async {
     try {
-      _isLoading.value = true;
+      isLoading = true;
+      sessionExpired = false;
       final surveys = await loadSurveys.load();
       _surveys.value = surveys
           .map((survey) => SurveyViewModel(
@@ -32,19 +37,18 @@ class GetxSurveysPresenter extends GetxController implements SurveysPresenter {
               ))
           .toList();
     } on DomainError catch (error) {
-      if (_surveys.subject.isClosed == false) {
+      if (error == DomainError.accessDenied) {
+        sessionExpired = true;
+      } else {
         _surveys.value = [];
         _surveys.subject.addError(UIError.unexpected.description);
       }
     } finally {
-      _isLoading.value = false;
+      isLoading = false;
     }
   }
 
   GetxSurveysPresenter({required this.loadSurveys});
-
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
 
   @override
   Stream<List<SurveyViewModel>> get surveysStream => _surveys.stream;

@@ -10,4 +10,5 @@ HttpClientDemo makeAuthorizeHttpClientDecorator() =>
     AuthorizeHttpClientDecorator(
       decoratee: makeHttpAdapter(),
       fetchSecureCacheStorage: makeSecureStorageAdapter(),
+      deleteSecureCacheStorage: makeSecureStorageAdapter(),
     );

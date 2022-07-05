@@ -5,6 +5,7 @@ import '../../helpers/errors/ui_error.dart';
 abstract class SurveysPresenter {
   Stream<bool> get isLoadingStream;
   Stream<List<SurveyViewModel>> get surveysStream;
+  Stream<bool> get isSessionExpiredStream;
   Future<void> loadData();
   void goToSurveyResult(String surveyId);
   Stream<String> get navigateToStream;

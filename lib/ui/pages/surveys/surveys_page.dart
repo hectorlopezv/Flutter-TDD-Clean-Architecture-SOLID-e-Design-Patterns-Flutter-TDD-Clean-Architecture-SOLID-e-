@@ -34,10 +34,15 @@ class SurveysPage extends StatelessWidget {
         }
       }
     });
+
+    controller.isSessionExpiredStream.listen((isSessionExpired) {
+      if (isSessionExpired) {
+        Get.offAllNamed("/login");
+      } 
+    });
+
     controller.navigateToStream.listen((page) {
-      
       Navigator.of(context).pushNamed("/survey_result/$page");
-  
     });
 
     return Scaffold(
