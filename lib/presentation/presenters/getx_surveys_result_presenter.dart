@@ -3,11 +3,10 @@ import 'package:tdd_clean_patterns_solid/domain/helpers/helpers.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/load_surveys/load_surveys_result.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/save_survey_result/save_survey_result.dart';
 import 'package:tdd_clean_patterns_solid/ui/helpers/errors/ui_error.dart';
-import 'package:tdd_clean_patterns_solid/ui/pages/surveys_result/survey_answer_viewmodel.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys_result/survey_result_presenter.dart';
 import 'package:get/get.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys_result/survey_result_viewmodel.dart';
-
+import '../helpers/survey_result_entity_extensions.dart';
 class GetxSurveysResultPresenter extends GetxController
     implements SurveysResultPresenter {
   final LoadSurveyResult loadSurveysResult;
@@ -49,27 +48,16 @@ class GetxSurveysResultPresenter extends GetxController
     try {
       _isLoading.value = true;
       final surveyResult = await action();
-      _surveyResult.value = SurveyResultViewModel(
-        answers: surveyResult.answers
-            .map(
-              (answer) => SurveyAnswerViewModel(
-                  answer: answer.answer,
-                  isCurretAnswer: answer.isCurrentAnswer,
-                  percent: "${answer.percent}%",
-                  image: answer.image),
-            )
-            .toList(),
-        question: surveyResult.question,
-        surveyId: surveyResult.surveyId,
-      );
+      _surveyResult.subject.add(surveyResult.toViewModel());
     } on DomainError catch (error) {
       if (_surveyResult.subject.isClosed == false) {
         _surveyResult.value = null;
         _surveyResult.subject.addError(UIError.unexpected.description);
       }
-    } catch (error) {
     } finally {
       _isLoading.value = false;
     }
   }
 }
+
+

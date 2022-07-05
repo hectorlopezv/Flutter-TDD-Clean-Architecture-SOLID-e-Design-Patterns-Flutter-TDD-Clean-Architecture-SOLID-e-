@@ -1,22 +1,41 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:tdd_clean_patterns_solid/main/factories/pages/surverys/surveys_presenter_factory.dart';
 import 'package:tdd_clean_patterns_solid/ui/components/reload_screen.dart';
-
 import 'package:tdd_clean_patterns_solid/ui/components/spinner_dialog.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys/components/survey_items.dart';
-import 'package:tdd_clean_patterns_solid/ui/components/survey_item.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys/surveys_presenter.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/surveys/surveys_view_model.dart';
 
-class SurveysPage extends StatelessWidget {
+class SurveysPage extends StatefulWidget {
   final SurveysPresenter presenter;
   const SurveysPage({Key? key, required this.presenter}) : super(key: key);
 
   @override
+  State<SurveysPage> createState() => _SurveysPageState();
+}
+
+class _SurveysPageState extends State<SurveysPage> with RouteAware {
+  @override
+  void dispose() {
+    final routeObserver = Get.find<RouteObserver>();
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    final controller = Get.put(makeGetxSurveysPresenter());
+    controller.loadData();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final routeObserver = Get.find<RouteObserver>();
+    routeObserver.subscribe(
+      this,
+      ModalRoute.of(context)!,
+    );
     final controller = Get.put(makeGetxSurveysPresenter());
 
     controller.isLoadingStream.listen((isLoading) {
@@ -28,7 +47,7 @@ class SurveysPage extends StatelessWidget {
             return SpinnerDialog();
           },
         );
-      } else if(isLoading == false) {
+      } else if (isLoading == false) {
         if (Navigator.canPop(context)) {
           Navigator.of(context).pop();
         }
@@ -38,7 +57,7 @@ class SurveysPage extends StatelessWidget {
     controller.isSessionExpiredStream.listen((isSessionExpired) {
       if (isSessionExpired) {
         Get.offAllNamed("/login");
-      } 
+      }
     });
 
     controller.navigateToStream.listen((page) {

@@ -18,6 +18,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final routeObserver = Get.put<RouteObserver>(RouteObserver<PageRoute>());
     return GetMaterialApp(
       title: "4Dev",
       theme: ThemeData(
@@ -53,6 +54,7 @@ class App extends StatelessWidget {
         ),
       ),
       initialRoute: "/",
+      navigatorObservers: [routeObserver],
       getPages: [
         GetPage(name: "/", page: makeSplashPage, transition: Transition.fadeIn),
         GetPage(

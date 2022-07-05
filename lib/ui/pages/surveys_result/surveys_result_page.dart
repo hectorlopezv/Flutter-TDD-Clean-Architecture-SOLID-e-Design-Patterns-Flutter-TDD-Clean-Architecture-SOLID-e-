@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:tdd_clean_patterns_solid/main/factories/pages/surveys_result/survey_results_presenter_factory.dart';
@@ -22,20 +24,22 @@ class SurveysResultPage extends StatelessWidget {
       body: Builder(builder: (context) {
         final controller = Get.put(makeGetxSurveysResultPresenter());
 
-        controller.isLoadingStream.listen((isLoading) {
-          if (isLoading) {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return SpinnerDialog();
-              },
-            );
-          } else if(isLoading == false){
-   
-          }
-        });
+        controller.isLoadingStream.listen((isLoading) async {
+          final dialogContextCompleter = Completer<BuildContext>();
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext dialogContext) {
+              if (!dialogContextCompleter.isCompleted) {
+                dialogContextCompleter.complete(dialogContext);
+              }
+              return SpinnerDialog();
+            },
+          );
 
+          final dialogContext = await dialogContextCompleter.future;
+          Navigator.pop(dialogContext);
+        });
 
         return StreamBuilder<SurveyResultViewModel?>(
             stream: controller.surveyResultStream,
