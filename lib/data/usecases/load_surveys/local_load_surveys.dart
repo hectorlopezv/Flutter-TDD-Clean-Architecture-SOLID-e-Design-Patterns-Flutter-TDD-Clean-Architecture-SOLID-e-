@@ -35,7 +35,6 @@ class LocalLoadSurveys implements LoadSurveys {
     } catch (error) {
       throw DomainError.unexpected;
     }
-   
   }
 
   List<Map> _mapToJson(List<SurveryEntity> list) => list

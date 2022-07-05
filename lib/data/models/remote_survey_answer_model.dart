@@ -4,13 +4,13 @@ import 'package:tdd_clean_patterns_solid/domain/entities/survey_answer_entity.da
 class RemoteSurveyAnswerModel {
   final String? image;
   final String answer;
-  final bool isCurrentAccountAnswer;
+  final bool isCurrentAnswer;
   final int percent;
 
   RemoteSurveyAnswerModel(
       { this.image,
       required this.answer,
-      required this.isCurrentAccountAnswer,
+      required this.isCurrentAnswer,
       required this.percent});
 
   factory RemoteSurveyAnswerModel.fromJson(Map json) {
@@ -24,13 +24,13 @@ class RemoteSurveyAnswerModel {
       image: json["image"],
       answer: json["answer"],
       percent: json["percent"],
-      isCurrentAccountAnswer: json["isCurrentAccountAnswer"],
+      isCurrentAnswer: json["isCurrentAccountAnswer"],
     );
   }
 
   SurveyAnswerEntity toEntity() => SurveyAnswerEntity(
       image: image,
       answer: answer,
-      isCurrentAccountAnswer: isCurrentAccountAnswer,
+      isCurrentAnswer: isCurrentAnswer,
       percent: percent);
 }
