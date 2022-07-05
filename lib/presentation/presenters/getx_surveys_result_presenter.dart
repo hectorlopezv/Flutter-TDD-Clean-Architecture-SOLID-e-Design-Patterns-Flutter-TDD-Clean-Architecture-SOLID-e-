@@ -39,7 +39,7 @@ class GetxSurveysResultPresenter extends GetxController
             .map(
               (answer) => SurveyAnswerViewModel(
                   answer: answer.answer,
-                  isCurretAnswer: answer.isCurrentAccountAnswer,
+                  isCurretAnswer: answer.isCurrentAnswer,
                   percent: "${answer.percent}%",
                   image: answer.image),
             )

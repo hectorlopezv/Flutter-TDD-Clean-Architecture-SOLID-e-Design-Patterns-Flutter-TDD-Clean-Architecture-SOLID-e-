@@ -1,12 +1,8 @@
-
-
-
 import 'package:tdd_clean_patterns_solid/data/usecases/load_surveys/local_load_surveys.dart';
 import 'package:tdd_clean_patterns_solid/data/usecases/load_surveys/remote_load_surveys.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/survey_entity.dart';
 import 'package:tdd_clean_patterns_solid/domain/helpers/helpers.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/load_surveys/load_surverys.dart';
-import 'package:tdd_clean_patterns_solid/infra/cache/local_storage_adapter.dart';
 
 class RemoteLoadSurveysWithLocalFallBack implements LoadSurveys {
   final RemoteLoadSurveys remote;

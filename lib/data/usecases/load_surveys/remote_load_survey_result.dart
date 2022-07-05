@@ -1,11 +1,8 @@
 import 'package:tdd_clean_patterns_solid/data/http/http_client.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http_error.dart';
-import 'package:tdd_clean_patterns_solid/data/models/remote_survey_model.dart';
 import 'package:tdd_clean_patterns_solid/data/models/remote_survey_result_model.dart';
-import 'package:tdd_clean_patterns_solid/domain/entities/survey_entity.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/survey_result_entity.dart';
 import 'package:tdd_clean_patterns_solid/domain/helpers/helpers.dart';
-import 'package:tdd_clean_patterns_solid/domain/usecases/load_surveys/load_surverys.dart';
 import 'package:tdd_clean_patterns_solid/domain/usecases/load_surveys/load_surveys_result.dart';
 
 class RemoteLoadSurveysResult implements LoadSurveyResult {
