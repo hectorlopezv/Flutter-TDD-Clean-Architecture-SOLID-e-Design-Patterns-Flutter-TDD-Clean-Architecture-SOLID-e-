@@ -4,7 +4,7 @@ import '../../domain/entities/account_entity.dart';
 import '../../domain/usecases/load_current_account/load_curret_account.dart';
 import '../../ui/pages/splash/splash_presenter.dart';
 
-class GetXSplashPresenter implements SplashPresenter {
+class GetXSplashPresenter extends GetxController implements SplashPresenter {
   final LoadCurrentAccount loadCurrentAccount;
   final _navigateTo = RxString("");
   GetXSplashPresenter({required this.loadCurrentAccount});

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tdd_clean_patterns_solid/ui/helpers/errors/ui_error.dart';
 import 'package:tdd_clean_patterns_solid/ui/helpers/i18n/resources.dart';
+import 'package:tdd_clean_patterns_solid/ui/mixins/keyboard_manager.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/components/login_button.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/login/components/password_input.dart';
 
@@ -22,7 +23,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with KeyboardManager {
   GetxLoginPresenter controller = Get.put(makeGetxLoginPresenter());
   @override
   Widget build(BuildContext context) {
@@ -51,21 +52,7 @@ class _LoginPageState extends State<LoginPage> {
           
       }
     });
-    controller.isLoadingStream.listen((isLoading) {
-      if (isLoading) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return SpinnerDialog();
-          },
-        );
-      } else {
-        if (Navigator.canPop(context)) {
-          Navigator.of(context).pop();
-        }
-      }
-    });
+
     controller.navigateTo.listen((page) {
       print("page ${page}");
 
@@ -76,39 +63,44 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
         body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            LoginHeader(),
-            Text(
-              "Login".toUpperCase(),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(32),
-              child: Form(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: EmailInput(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: PassWordInput(),
-                    ),
-                    LoginButton(),
-                    FlatButton.icon(
-                      icon: Icon(Icons.person),
-                      onPressed: controller.goToSignUp,
-                      label: Text(R.strings.addAccount)
-                    )
-                  ],
-                ),
+      child: GestureDetector(
+        onTap: () {
+          hideKeyboard(context);
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              LoginHeader(),
+              Text(
+                "Login".toUpperCase(),
+                textAlign: TextAlign.center,
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: Form(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: EmailInput(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PassWordInput(),
+                      ),
+                      LoginButton(),
+                      FlatButton.icon(
+                        icon: Icon(Icons.person),
+                        onPressed: controller.goToSignUp,
+                        label: Text(R.strings.addAccount)
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     ));

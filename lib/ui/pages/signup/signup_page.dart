@@ -3,17 +3,16 @@ import 'package:get/get.dart';
 import 'package:tdd_clean_patterns_solid/main/factories/pages/signIn/signin_presenter_factory.dart';
 import 'package:tdd_clean_patterns_solid/presentation/presenters/getx_signin_presenter.dart';
 import 'package:tdd_clean_patterns_solid/ui/components/components.dart';
-import 'package:tdd_clean_patterns_solid/ui/helpers/i18n/resources.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/signup/components/email_input.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/signup/components/name_input.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/signup/components/password_confirmation_input.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/signup/components/sigin_button.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/signup/components/password_input.dart';
 import 'package:tdd_clean_patterns_solid/ui/pages/signup/signup_presenter.dart';
-
 import '../../components/spinner_dialog.dart';
+import '../../mixins/keyboard_manager.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatelessWidget with KeyboardManager {
   final SignUpPresenter presenter;
   const SignUpPage({Key? key, required this.presenter}) : super(key: key);
   @override
@@ -66,44 +65,49 @@ class SignUpPage extends StatelessWidget {
     });
     return Scaffold(
         body: SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-           LoginHeader(),
-            Text(
-              "Login".toUpperCase(),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(32),
-              child: Form(
-                child: Column(
-                  children: [
-                   NameInput(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: EmailInput(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: PassWordInput(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: PassWordConfirmationInput(),
-                    ),
-                   SignInButton(),
-                    FlatButton.icon(
-                        icon: Icon(Icons.exit_to_app),
-                        onPressed: controller.goToLogin,
-                        label: Text("Login"),
-                  ),
-                  ],
-                ),
+      child: GestureDetector(
+        onTap: () {
+          hideKeyboard(context);
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+             LoginHeader(),
+              Text(
+                "Login".toUpperCase(),
+                textAlign: TextAlign.center,
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: Form(
+                  child: Column(
+                    children: [
+                     NameInput(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: EmailInput(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PassWordInput(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: PassWordConfirmationInput(),
+                      ),
+                     SignInButton(),
+                      FlatButton.icon(
+                          icon: Icon(Icons.exit_to_app),
+                          onPressed: controller.goToLogin,
+                          label: Text("Login"),
+                    ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     ));
