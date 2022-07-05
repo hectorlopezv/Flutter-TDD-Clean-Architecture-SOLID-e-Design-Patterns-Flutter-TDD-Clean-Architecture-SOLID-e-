@@ -1,6 +1,5 @@
 import 'package:tdd_clean_patterns_solid/validation/validators/compare_fields_validation.dart';
 import 'package:tdd_clean_patterns_solid/validation/validators/password_validation.dart';
-
 import '../../validation/protocols/field_validation.dart';
 import '../../validation/validators/email_validation.dart';
 import '../../validation/validators/min_length_validation.dart';

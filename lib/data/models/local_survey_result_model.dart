@@ -1,6 +1,5 @@
 import 'package:tdd_clean_patterns_solid/data/models/local_survey_answer_model.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/survey_answer_entity.dart';
-import 'package:tdd_clean_patterns_solid/domain/entities/survey_entity.dart';
 import 'package:tdd_clean_patterns_solid/domain/entities/survey_result_entity.dart';
 
 class LocalSurveyResultModel {

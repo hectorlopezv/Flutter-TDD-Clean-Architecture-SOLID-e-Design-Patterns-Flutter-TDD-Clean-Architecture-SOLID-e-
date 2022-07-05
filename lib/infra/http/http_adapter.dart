@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:tdd_clean_patterns_solid/data/http/http.dart';
 import 'package:tdd_clean_patterns_solid/data/http/http_client.dart';
@@ -9,22 +8,26 @@ class HttpAdapter implements HttpClientDemo {
   HttpAdapter(this.client);
   @override
   Future<dynamic> request(
-      {required String url, required String method, Map? body, Map? headers}) async {
+      {required String url,
+      required String method,
+      Map? body,
+      Map? headers}) async {
     final urlParse = Uri.parse(url);
-    final  defaultHeaders = headers?.cast<String, String>() ?? {}..addAll({
-      'content-type': 'application/json',
-      'accept': 'application/json'
-      });
+    final defaultHeaders = headers?.cast<String, String>() ?? {}
+      ..addAll(
+          {'content-type': 'application/json', 'accept': 'application/json'});
     var response = http.Response('', 500);
 
     try {
       if (method == "post") {
         final parsedBody = body != null ? jsonEncode(body) : null;
-        response =
-            await client.post(urlParse, headers: defaultHeaders, body: parsedBody).timeout(Duration(seconds: 5));
-      }
-      else if (method == "get"){
-        response = await client.get(urlParse, headers: defaultHeaders).timeout(Duration(seconds: 5));
+        response = await client
+            .post(urlParse, headers: defaultHeaders, body: parsedBody)
+            .timeout(Duration(seconds: 5));
+      } else if (method == "get") {
+        response = await client
+            .get(urlParse, headers: defaultHeaders)
+            .timeout(Duration(seconds: 5));
       }
     } catch (e) {
       throw HttpError.serverError;
@@ -33,7 +36,7 @@ class HttpAdapter implements HttpClientDemo {
     return _handleResponse(response);
   }
 
-   _handleResponse(http.Response response) {
+  _handleResponse(http.Response response) {
     if (response.statusCode == 200) {
       return response.body.isEmpty ? null : jsonDecode(response.body);
     } else if (response.statusCode == 204) {

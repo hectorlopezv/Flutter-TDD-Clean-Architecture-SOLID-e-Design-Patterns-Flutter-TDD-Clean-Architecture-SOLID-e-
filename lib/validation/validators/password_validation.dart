@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import '../../presentation/protocols/validation.dart';
 import '../protocols/field_validation.dart';
 
